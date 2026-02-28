@@ -66,8 +66,4 @@ def payday():
     next_payday = date(today.year, today.month + 1, 25)
     return(next_payday - today).days
     
-
-
-
-
 main()
