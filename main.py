@@ -59,9 +59,9 @@ def payday():
   if today.day <= payday_day:
     days_remaining = payday_day - today.day
     return days_remaining
-  elif today.day > payday_day and today.month + 1 >= 12:
+  elif today.day > payday_day and today.month == 12:
     next_payday = date(today.year + 1, 1, 25)
-    return next_payday - today
+    return (next_payday - today).days
   else:
     next_payday = date(today.year, today.month + 1, 25)
     return(next_payday - today).days
