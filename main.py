@@ -55,15 +55,14 @@ def payday():
   # Get todays date
   today = date.today()
   # Payday
-  payday_day = 25
-  if today.day <= payday_day:
-    days_remaining = payday_day - today.day
-    return days_remaining
-  elif today.day > payday_day and today.month == 12:
-    next_payday = date(today.year + 1, 1, 25)
-    return (next_payday - today).days
-  else:
-    next_payday = date(today.year, today.month + 1, 25)
-    return(next_payday - today).days
+  this_month_payday = date(today.year, today.month, 25)
+
+  if this_month_payday > today:
+    return (this_month_payday - today).days
+  elif today > this_month_payday and today.month < 12:
+    return (date(today.year, today.month + 1, 25) - today).days
+  else: 
+    return (date(today.year + 1, 1, 25) - today).days
+  
     
 main()
