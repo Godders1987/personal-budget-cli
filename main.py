@@ -12,7 +12,7 @@ def main():
       exit('amount.txt', month_amt)
       break
     elif command == 'set':
-      month_amt = set_month_amt()
+      month_amt = Decimal(input('What would you like to set your monthly budget at?: '))
       print('Your monthly amount has been set at £{}.'.format(month_amt))
     elif command == 'add':
       month_amt = expense(month_amt)
@@ -27,13 +27,6 @@ def main():
       days_left = payday()
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
       
-
-# Sets the monthly spend limited decidied by user
-def set_month_amt():
-  amt = input('What would you like to set your monthly budget at?: ')
-  amt = Decimal(amt)
-  return amt
-
 # Minuses off spend from monthly budget and returns new amount
 def expense(value):
   spend = input('How much have you spent?: ')
@@ -53,7 +46,6 @@ def exit(file, month_amt):
   with open(file, 'w') as x:
     x.write(str(month_amt))
     x.close()
-
 
 # Calculates when the next payday is and calculates how many days till then
 def payday():
