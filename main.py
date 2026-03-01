@@ -19,9 +19,10 @@ def main():
       month_amt = expense(month_amt, spent)
       print('Your remaining budget is £{}'.format(month_amt))
     elif command == 'reset':
-      file = open('amount.txt', 'w')
-      file.write('0')
-      file.close()
+      reset('amount.txt')
+      # file = open('amount.txt', 'w')
+      # file.write('0')
+      # file.close()
       print('Your monthly balance has been reset to £0.')
       break
     elif command == 'balance':
@@ -45,6 +46,13 @@ def exit(file, month_amt):
   with open(file, 'w') as x:
     x.write(str(month_amt))
     x.close()
+
+# Reset function
+def reset(file):
+  with open(file, 'w') as x:
+    x.write('0')
+    x.close()
+
 
 # Calculates when the next payday is and calculates how many days till then
 def payday():
