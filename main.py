@@ -9,7 +9,7 @@ def main():
     command = input('What would you like to do? (Set, Add, Balance, Reset or Exit): ')
     command = command.lower()
     if command == 'exit':
-      exit('amount.txt', month_amt)
+      save_amt('amount.txt', month_amt)
       break
     elif command == 'set':
       month_amt = Decimal(input('What would you like to set your monthly budget at?: '))
@@ -20,9 +20,6 @@ def main():
       print('Your remaining budget is £{}'.format(month_amt))
     elif command == 'reset':
       reset('amount.txt')
-      # file = open('amount.txt', 'w')
-      # file.write('0')
-      # file.close()
       print('Your monthly balance has been reset to £0.')
       break
     elif command == 'balance':
@@ -42,7 +39,7 @@ def get_month_amt(filepath):
       return month_amt
    
 # Exit function
-def exit(file, month_amt):
+def save_amt(file, month_amt):
   with open(file, 'w') as x:
     x.write(str(month_amt))
     x.close()
