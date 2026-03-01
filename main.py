@@ -15,7 +15,8 @@ def main():
       month_amt = Decimal(input('What would you like to set your monthly budget at?: '))
       print('Your monthly amount has been set at £{}.'.format(month_amt))
     elif command == 'add':
-      month_amt = expense(month_amt)
+      spent = Decimal(input('How much have you spent?: '))
+      month_amt = expense(month_amt, spent)
       print('Your remaining budget is £{}'.format(month_amt))
     elif command == 'reset':
       file = open('amount.txt', 'w')
@@ -28,10 +29,8 @@ def main():
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
       
 # Minuses off spend from monthly budget and returns new amount
-def expense(value):
-  spend = input('How much have you spent?: ')
-  spend = Decimal(spend)
-  new_amt = value - spend
+def expense(month_amt, value):
+  new_amt = month_amt - value
   return new_amt
 
 # Reads the text file that has the current remaining amount saved
