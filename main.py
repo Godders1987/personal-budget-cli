@@ -9,9 +9,7 @@ def main():
     command = input('What would you like to do? (Set, Add, Balance, Reset or Exit): ')
     command = command.lower()
     if command == 'exit':
-      file = open('amount.txt', 'w')
-      file.write(str(month_amt))
-      file.close()
+      exit('amount.txt', month_amt)
       break
     elif command == 'set':
       month_amt = set_month_amt()
@@ -43,12 +41,19 @@ def expense(value):
   new_amt = value - spend
   return new_amt
 
-# Reads the tex file that has the current remaining amount saved
+# Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
    with open(filepath) as x:
       month_amt = x.read()
       month_amt = Decimal(month_amt)
       return month_amt
+   
+# Exit function
+def exit(file, month_amt):
+  with open(file, 'w') as x:
+    x.write(str(month_amt))
+    x.close()
+
 
 # Calculates when the next payday is and calculates how many days till then
 def payday():
