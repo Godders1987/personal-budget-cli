@@ -42,14 +42,11 @@ def get_month_amt(filepath):
 def save_amt(file, month_amt):
   with open(file, 'w') as x:
     x.write(str(month_amt))
-    x.close()
 
 # Reset function
 def reset(file):
   with open(file, 'w') as x:
     x.write('0')
-    x.close()
-
 
 # Calculates when the next payday is and calculates how many days till then
 def payday():
