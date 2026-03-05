@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from datetime import date
 
 def main():
@@ -15,8 +15,14 @@ def main():
       month_amt = Decimal(input('What would you like to set your monthly budget at?: '))
       print('Your monthly amount has been set at £{}.'.format(month_amt))
     elif command == 'add':
-      spent = Decimal(input('How much have you spent?: '))
-      month_amt = expense(month_amt, spent)
+      while True: 
+        spent = (input('How much have you spent?: '))
+        try:
+          dec_spent = check_input(spent)
+          month_amt = expense(month_amt, dec_spent)
+          break
+        except InvalidOperation:
+          print('Invalid input, please try again!')     
       print('Your remaining budget is £{}'.format(month_amt))
     elif command == 'reset':
       reset('amount.txt')
@@ -25,7 +31,15 @@ def main():
     elif command == 'balance':
       days_left = payday()
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
-      
+
+# Check if user input is both a number and a positive number
+def check_input(value):
+    check = Decimal(value)
+    if check > 0:
+      return check
+    else:
+      raise InvalidOperation
+    
 # Minuses off spend from monthly budget and returns new amount
 def expense(month_amt, value):
   new_amt = month_amt - value
