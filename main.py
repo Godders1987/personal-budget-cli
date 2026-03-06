@@ -48,8 +48,7 @@ def check_input(value):
     
 # Minuses off spend from monthly budget and returns new amount
 def expense(month_amt, value):
-  new_amt = month_amt - value
-  return new_amt
+  return new_amt - value
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
