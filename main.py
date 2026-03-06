@@ -12,8 +12,14 @@ def main():
       save_amt('amount.txt', month_amt)
       break
     elif command == 'set':
-      month_amt = Decimal(input('What would you like to set your monthly budget at?: '))
-      print('Your monthly amount has been set at £{}.'.format(month_amt))
+      while True:
+        set_amt = input('What would you like to set your monthly budget at?: ')
+        try:
+          month_amt = check_input(set_amt)
+          print('Your monthly amount has been set at £{}.'.format(month_amt))
+          break
+        except InvalidOperation:
+          print('Invalid input, please try again!') 
     elif command == 'add':
       while True: 
         spent = (input('How much have you spent?: '))
