@@ -6,8 +6,14 @@ def main():
   month_amt = get_month_amt('amount.txt')
   if month_amt == 0:
     print('You have not yet set your monthly budget!')
-    set_amt = input('What would you like to set your monthly budget at?: ')
-    month_amt = check_input(set_amt)
+    while True:
+      set_amt = input('What would you like to set your monthly budget at?: ')
+      try:
+        month_amt = check_input(set_amt)
+        print('Your monthly amount has been set at £{}.'.format(month_amt))
+        break
+      except InvalidOperation:
+        print('Invalid input, please try again!')
   else:
     days_left = payday()
     print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
