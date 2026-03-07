@@ -4,6 +4,13 @@ from datetime import date
 def main():
   # Set monthly amount
   month_amt = get_month_amt('amount.txt')
+  if month_amt == 0:
+    print('You have not yet set your monthly budget!')
+    set_amt = input('What would you like to set your monthly budget at?: ')
+    month_amt = check_input(set_amt)
+  else:
+    days_left = payday()
+    print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
   # Keeps loop open
   while True:
     command = input('What would you like to do? (Set, Add, Balance, Reset or Exit): ')
@@ -48,7 +55,7 @@ def check_input(value):
     
 # Minuses off spend from monthly budget and returns new amount
 def expense(month_amt, value):
-  return new_amt - value
+  return month_amt - value
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
