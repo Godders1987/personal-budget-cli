@@ -6,14 +6,7 @@ def main():
   month_amt = get_month_amt('amount.txt')
   if month_amt == 0:
     print('You have not yet set your monthly budget!')
-    while True:
-      set_amt = input('What would you like to set your monthly budget at?: ')
-      try:
-        month_amt = check_input(set_amt)
-        print('Your monthly amount has been set at £{}.'.format(month_amt))
-        break
-      except InvalidOperation:
-        print('Invalid input, please try again!')
+    month_amt = set_monthly_amt()
   else:
     days_left = payday()
     print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
@@ -25,14 +18,7 @@ def main():
       save_amt('amount.txt', month_amt)
       break
     elif command == 'set':
-      while True:
-        set_amt = input('What would you like to set your monthly budget at?: ')
-        try:
-          month_amt = check_input(set_amt)
-          print('Your monthly amount has been set at £{}.'.format(month_amt))
-          break
-        except InvalidOperation:
-          print('Invalid input, please try again!') 
+      month_amt = set_monthly_amt()
     elif command == 'add':
       while True: 
         spent = (input('How much have you spent?: '))
@@ -50,6 +36,18 @@ def main():
     elif command == 'balance':
       days_left = payday()
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
+
+# Checks and sets the monthly budget
+def set_monthly_amt():
+  while True:
+      set_amt = input('What would you like to set your monthly budget at?: ')
+      try:
+        month_amt = check_input(set_amt)
+        print('Your monthly amount has been set at £{}.'.format(month_amt))
+        return month_amt
+        break
+      except InvalidOperation:
+        print('Invalid input, please try again!')
 
 # Check if user input is both a number and a positive number
 def check_input(value):
