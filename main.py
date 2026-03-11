@@ -21,6 +21,8 @@ def main():
       month_amt = set_monthly_amt()
     elif command == 'add':
       while True: 
+        description = input('What did you buy?: ')
+        description = description.capitalize()
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
