@@ -39,6 +39,8 @@ def main():
     elif command == 'balance':
       days_left = payday()
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
+    elif command == 'history':
+      history()
 
 # Checks and sets the monthly budget
 def set_monthly_amt():
@@ -68,8 +70,12 @@ def expense(month_amt, value):
 def transactions(description, amount):
   today = date.today()
   with open('transactions.txt', 'a')as t:
-    t.write(f"{today},{description},{amount}\n")
-  # print('On {}, you have spent {} on {}'.format(today, amount, description))
+    t.write(f"{today}, {description}, {amount}\n")
+
+def history():
+  with open('transactions.txt') as t:
+     for x in t:
+       print(x)
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
