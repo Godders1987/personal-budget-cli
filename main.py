@@ -27,6 +27,7 @@ def main():
         try:
           dec_spent = check_input(spent)
           month_amt = expense(month_amt, dec_spent)
+          transactions(description, dec_spent)
           break
         except InvalidOperation:
           print('Invalid input, please try again!')     
@@ -62,6 +63,13 @@ def check_input(value):
 # Minuses off spend from monthly budget and returns new amount
 def expense(month_amt, value):
   return month_amt - value
+
+# writes transaction to transactions file
+def transactions(description, amount):
+  today = date.today()
+  with open('transactions.txt', 'a')as t:
+    t.write(f"{today},{description},{amount}\n")
+  # print('On {}, you have spent {} on {}'.format(today, amount, description))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
