@@ -3,16 +3,16 @@ from datetime import date
 
 def main():
   # Set monthly amount
-  month_amt = get_month_amt('amount.txt')
-  if month_amt == 0:
-    print('You have not yet set your monthly budget!')
-    month_amt = set_monthly_amt()
-  else:
-    days_left = payday()
-    print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
-  # Keeps loop open
+  with open('amount.txt') as x:
+    if x.read(1):
+      month_amt = get_month_amt('amount.txt')
+      days_left = payday()
+      print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
+    else:
+      print('You have not yet set your monthly budget!')
+      month_amt = set_monthly_amt()
   while True:
-    command = input('What would you like to do? (Set, Add, Balance, Reset or Exit): ')
+    command = input('What would you like to do? (Set, Add, Balance, History, Reset or Exit): ')
     command = command.lower()
     if command == 'exit':
       save_amt('amount.txt', month_amt)
@@ -33,7 +33,7 @@ def main():
           print('Invalid input, please try again!')     
       print('Your remaining budget is £{}'.format(month_amt))
     elif command == 'reset':
-      reset('amount.txt')
+      reset('amount.txt', 'transactions.txt')
       print('Your monthly balance has been reset to £0.')
       break
     elif command == 'balance':
@@ -90,9 +90,10 @@ def save_amt(file, month_amt):
     x.write(str(month_amt))
 
 # Reset function
-def reset(file):
-  with open(file, 'w') as x:
-    x.write('0')
+def reset(file_one, file_two):
+  with open(file_one, 'w') as x, open(file_two, 'w') as y:
+    x.write('')
+    y.write('')
 
 # Calculates when the next payday is and calculates how many days till then
 def payday():
