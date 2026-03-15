@@ -87,7 +87,7 @@ def history():
   with open('transactions.txt') as t:
      for x in t:
        info = x.strip().split(',')
-       print("Date:{} | Description:{} | Amount:£{}".format(info[0].strip(), info[1].strip(), info[2].strip()))
+       print("Date: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip(), info[2].strip()))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
