@@ -5,17 +5,17 @@ def main():
   # Set monthly amount
   with open('amount.txt') as x:
     if x.read(1):
-      month_amt = get_month_amt('amount.txt')
+      month_amt = calculate_balance()
       days_left = payday()
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
     else:
       print('You have not yet set your monthly budget!')
       month_amt = set_monthly_amt()
+      save_amt('amount.txt', month_amt)
   while True:
     command = input('What would you like to do? (Set, Add, Balance, History, Reset or Exit): ')
     command = command.lower()
     if command == 'exit':
-      save_amt('amount.txt', month_amt)
       break
     elif command == 'set':
       month_amt = set_monthly_amt()
@@ -38,9 +38,8 @@ def main():
       break
     elif command == 'balance':
       remaining = calculate_balance()
-      print('You have £{} remaining'.format(remaining))
-      # days_left = payday()
-      # print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
+      days_left = payday()
+      print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(remaining, days_left))
     elif command == 'history':
       history()
 
@@ -87,7 +86,7 @@ def history():
   with open('transactions.txt') as t:
      for x in t:
        info = x.strip().split(',')
-       print("Date: {} | Description: {} | Amount: £{}".format(info[0], info[1], info[2]))
+       print("Date:{} | Description:{} | Amount:£{}".format(info[0].strip(), info[1].strip(), info[2].strip()))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
