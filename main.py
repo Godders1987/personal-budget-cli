@@ -3,6 +3,7 @@ from datetime import date
 
 def main():
   # Set monthly amount
+  open('transactions.txt', 'a').close()
   with open('amount.txt') as x:
     if x.read(1):
       month_amt = calculate_balance()
