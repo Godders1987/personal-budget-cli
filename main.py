@@ -37,8 +37,10 @@ def main():
       print('Your monthly balance has been reset to £0.')
       break
     elif command == 'balance':
-      days_left = payday()
-      print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
+      remaining = calculate_balance()
+      print('You have £{} remaining'.format(remaining))
+      # days_left = payday()
+      # print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(month_amt, days_left))
     elif command == 'history':
       history()
 
@@ -65,6 +67,15 @@ def check_input(value):
 # Minuses off spend from monthly budget and returns new amount
 def expense(month_amt, value):
   return month_amt - value
+
+def calculate_balance():
+  budget = get_month_amt('amount.txt')
+  total_spend = Decimal(0)
+  with open('transactions.txt') as s:
+    for x in s:
+      details = x.strip().split(',')
+      total_spend += Decimal(details[2])
+    return budget - total_spend
 
 # writes transaction to transactions file
 def transactions(description, amount):
