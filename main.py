@@ -66,7 +66,7 @@ def check_input(value):
     else:
       raise InvalidOperation
     
-# Minuses off spend from monthly budget and returns new amount
+# Calculates reamining monthly balance
 def calculate_balance():
   budget = get_month_amt('amount.txt')
   total_spend = Decimal(0)
@@ -82,6 +82,7 @@ def transactions(description, amount):
   with open('transactions.txt', 'a')as t:
     t.write(f"{today}, {description}, {amount}\n")
 
+# Displays the history of transactions in a table
 def history():
   with open('transactions.txt') as t:
      for x in t:
