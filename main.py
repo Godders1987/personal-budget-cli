@@ -2,9 +2,11 @@ from decimal import Decimal, InvalidOperation
 from datetime import date
 
 def main():
-  # Set monthly amount
+  # Checks if transaction.txt is present, if not, creates file
   open('transactions.txt', 'a').close()
+  # Opens amount.txt
   with open('amount.txt') as x:
+    # Checks if the file is empty
     if x.read(1):
       month_amt = calculate_balance()
       days_left = payday()
@@ -27,7 +29,7 @@ def main():
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
-          month_amt = expense(month_amt, dec_spent)
+          month_amt = calculate_balance()
           transactions(description, dec_spent)
           break
         except InvalidOperation:
@@ -65,9 +67,6 @@ def check_input(value):
       raise InvalidOperation
     
 # Minuses off spend from monthly budget and returns new amount
-def expense(month_amt, value):
-  return month_amt - value
-
 def calculate_balance():
   budget = get_month_amt('amount.txt')
   total_spend = Decimal(0)
