@@ -84,10 +84,16 @@ def transactions(description, amount):
 
 # Displays the history of transactions in a table
 def history():
+  desc_length = 0
   with open('transactions.txt') as t:
      for x in t:
        info = x.strip().split(',')
-       print("Date: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip(), info[2].strip()))
+       if len(info[1].strip()) > desc_length:
+         desc_length = len(info[1].strip())
+  with open('transactions.txt') as u:
+      for x in u:
+        info = x.strip().split(',')
+        print("Date: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip().ljust(desc_length), info[2].strip()))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
