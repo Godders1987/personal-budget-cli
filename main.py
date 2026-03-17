@@ -29,8 +29,8 @@ def main():
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
-          month_amt = calculate_balance()
           transactions(description, dec_spent)
+          month_amt = calculate_balance()
           break
         except InvalidOperation:
           print('Invalid input, please try again!')     
