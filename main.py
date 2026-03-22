@@ -29,7 +29,7 @@ def main():
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
-          transactions(description, "Debit", dec_spent)
+          transactions(description, "Debit ", dec_spent)
           month_amt = calculate_balance()
           break
         except InvalidOperation:
@@ -51,9 +51,8 @@ def main():
         description = description.capitalize()
         str_income = input('What was the value of the income?: ')
         try: 
-          dec_income = income(str_income)
-          print(dec_income)
-          transactions(description, dec_income, "Credit")
+          dec_income = check_input(str_income)
+          transactions(description, "Credit", dec_income)
           month_amt = calculate_balance()
           break
         except InvalidOperation:
@@ -91,7 +90,11 @@ def calculate_balance():
     for x in s:
       if x.strip():
         details = x.strip().split(',')
-        total_spend += Decimal(details[3])
+        print(details)
+        if details[1] == " Debit ":
+          total_spend += Decimal(details[3])
+        else:
+          total_spend -= Decimal(details[3])
     return budget - total_spend
 
 # writes transaction to transactions file
