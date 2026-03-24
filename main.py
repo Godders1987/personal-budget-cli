@@ -29,7 +29,7 @@ def main():
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
-          transactions(description, "Debit ", dec_spent)
+          transactions(description, "Debit", dec_spent)
           month_amt = calculate_balance()
           break
         except InvalidOperation:
@@ -89,9 +89,8 @@ def calculate_balance():
   with open('transactions.txt') as s:
     for x in s:
       if x.strip():
-        details = x.strip().split(',')
-        print(details)
-        if details[1] == " Debit ":
+        details = [x.strip() for x in x.split(',')]
+        if details[1] == "Debit":
           total_spend += Decimal(details[3])
         else:
           total_spend -= Decimal(details[3])
@@ -106,15 +105,20 @@ def transactions(description, type, amount):
 # Displays the history of transactions in a table
 def history():
   desc_length = 0
+  credit_len = 7
   with open('transactions.txt') as t:
      for x in t:
-       info = x.strip().split(',')
+       info = [x.strip() for x in x.split(',')]
        if len(info[2].strip()) > desc_length:
          desc_length = len(info[2].strip())
   with open('transactions.txt') as u:
       for x in u:
         info = x.strip().split(',')
-        print("Date: {} | Type: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip(), info[2].strip().ljust(desc_length), info[3].strip()))
+        # print(info)
+        if len(info[1]) == "Credit": 
+          print("Date: {} | Type: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip(), info[2].strip().ljust(desc_length), info[3].strip()))
+        else:
+          print("Date: {} | Type: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip().ljust(credit_len), info[2].strip().ljust(desc_length), info[3].strip()))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
