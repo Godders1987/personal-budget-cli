@@ -16,20 +16,20 @@ def main():
       month_amt = set_monthly_amt()
       save_amt('amount.txt', month_amt)
   while True:
-    command = input('What would you like to do? (Set, Add, Balance, History, Reset or Exit): ')
+    command = input('What would you like to do? (Set, Expense, Income, Balance, History, Reset or Exit): ')
     command = command.lower()
     if command == 'exit':
       break
     elif command == 'set':
       month_amt = set_monthly_amt()
-    elif command == 'add':
+    elif command == 'expense':
       while True: 
         description = input('What did you buy?: ')
         description = description.capitalize()
         spent = (input('How much have you spent?: '))
         try:
           dec_spent = check_input(spent)
-          transactions(description, dec_spent)
+          transactions(description, "Debit", dec_spent)
           month_amt = calculate_balance()
           break
         except InvalidOperation:
@@ -45,6 +45,19 @@ def main():
       print('Your remaining monthly balance is £{} and you have {} days until payday.'.format(remaining, days_left))
     elif command == 'history':
       history()
+    elif command == 'income':
+      while True: 
+        description = input('Where did the money come from?: ')
+        description = description.capitalize()
+        str_income = input('What was the value of the income?: ')
+        try: 
+          dec_income = check_input(str_income)
+          transactions(description, "Credit", dec_income)
+          month_amt = calculate_balance()
+          break
+        except InvalidOperation:
+          print('Invalid input, please try again!') 
+      print('Your remaining budget is £{}'.format(month_amt))
 
 # Checks and sets the monthly budget
 def set_monthly_amt():
@@ -65,6 +78,9 @@ def check_input(value):
       return check
     else:
       raise InvalidOperation
+
+def income(value):
+  return Decimal(value)
     
 # Calculates reamining monthly balance
 def calculate_balance():
@@ -72,28 +88,37 @@ def calculate_balance():
   total_spend = Decimal(0)
   with open('transactions.txt') as s:
     for x in s:
-      details = x.strip().split(',')
-      total_spend += Decimal(details[2])
+      if x.strip():
+        details = [x.strip() for x in x.split(',')]
+        if details[1] == "Debit":
+          total_spend += Decimal(details[3])
+        else:
+          total_spend -= Decimal(details[3])
     return budget - total_spend
 
 # writes transaction to transactions file
-def transactions(description, amount):
+def transactions(description, type, amount):
   today = date.today()
   with open('transactions.txt', 'a')as t:
-    t.write(f"{today}, {description}, {amount}\n")
+    t.write(f"{today}, {type}, {description}, {amount}\n")
 
 # Displays the history of transactions in a table
 def history():
   desc_length = 0
+  credit_len = 7
   with open('transactions.txt') as t:
      for x in t:
-       info = x.strip().split(',')
-       if len(info[1].strip()) > desc_length:
-         desc_length = len(info[1].strip())
+       info = [x.strip() for x in x.split(',')]
+       if len(info[2].strip()) > desc_length:
+         desc_length = len(info[2].strip())
   with open('transactions.txt') as u:
       for x in u:
         info = x.strip().split(',')
-        print("Date: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip().ljust(desc_length), info[2].strip()))
+        # print(info)
+        if len(info[1]) == "Credit": 
+          print("Date: {} | Type: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip(), info[2].strip().ljust(desc_length), info[3].strip()))
+        else:
+          print("Date: {} | Type: {} | Description: {} | Amount: £{}".format(info[0].strip(), info[1].strip().ljust(credit_len), info[2].strip().ljust(desc_length), info[3].strip()))
 
 # Reads the text file that has the current remaining amount saved
 def get_month_amt(filepath):
