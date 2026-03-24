@@ -15,7 +15,8 @@ A personal command-line budget tracking tool written in Python. Tracks monthly s
 Run with python main.py and follow the prompts. Available commands:
 
 - set — set your monthly budget
-- add — log a transaction
+- expense — log a debit transaction
+- income - log money coming into budget
 - balance — view remaining balance
 - history — view transaction history
 - reset — clear budget and transactions
